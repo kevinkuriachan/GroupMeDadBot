@@ -17,7 +17,7 @@ def bot_func():
 	return "ok", 200
 
 def echoMsg(data):
-	if data['name'] != 'EchoBot':
+	if data['name'] != 'Mock Bot':
 		msg = '{}, you sent "{}".'.format(data['name'], data['text'])
 		return msg
 
@@ -50,7 +50,12 @@ def sendMock(data, name):
 		msgData = {
 					'bot_id' : os.getenv('GROUPME_DADBOT_ID'),
 					'text' : msg,
-					'attachments': [{'type':'image', 'image_url': 'https://pbs.twimg.com/media/C_bTGQlUwAAwoAM.jpg'}]
+					'attachments': [
+						{
+							'type':'image',
+							'image_url': 'https://pbs.twimg.com/media/C_bTGQlUwAAwoAM.jpg'
+						}
+						]
 					}
 		url = 'https://api.groupme.com/v3/bots/post'
 		request = Request(url, urlencode(msgData).encode())
