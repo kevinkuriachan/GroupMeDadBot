@@ -1,0 +1,1 @@
+there is an environment variable named GROUPME_DADBOT_ID which should be equal to the bot ID of your groupme bot.
