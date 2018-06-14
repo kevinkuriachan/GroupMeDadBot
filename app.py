@@ -12,7 +12,7 @@ def echoMsg():
 	data = request.get_json()
 
 	if data['name'] != 'EchoBot':
-		msg = '{}, you sent"{}".'.format(data['name'], data['text'])
+		msg = '{}, you sent "{}".'.format(data['name'], data['text'])
 		sendMessage(msg)
 
 	return "ok", 200
