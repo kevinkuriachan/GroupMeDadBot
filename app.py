@@ -46,7 +46,7 @@ def mock(data, name):
 		return msg
 
 def sendMock(data,name):
-	if(data['name'==name]):
+	if(data['name']==name):
 		msg = mock(data)
 		msgData = {
 					'bot_id' : os.getenv('GROUPME_DADBOT_ID'),
