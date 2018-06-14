@@ -31,7 +31,7 @@ def sendMessage(msg):
 	request = Request(url, urlencode(data).encode())
 	json = urlopen(request).read().decode()
 
-def pureEcho(data)
+def pureEcho(data):
 	return data['text']
 
 def mock(data, name):
