@@ -44,7 +44,7 @@ def mock(data):
 			msg = msg+preCap[index].upper()
 	return msg
 
-def sendMock(data,name):
+def sendMock(data, name):
 	if(data['name']==name):
 		msg = mock(data)
 		msgData = {
@@ -53,5 +53,5 @@ def sendMock(data,name):
 					'attachments': [{'type':'image', 'image_url': 'https://pbs.twimg.com/media/C_bTGQlUwAAwoAM.jpg'}]
 					}
 		url = 'https://api.groupme.com/v3/bots/post'
-		request = Request(url, urlencode(data).encode())
+		request = Request(url, urlencode(msgData).encode())
 		json = urlopen(request).read().decode()
