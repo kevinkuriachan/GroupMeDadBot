@@ -8,14 +8,19 @@ from urllib.request import Request, urlopen
 app = Flask(__name__)
 
 @app.route('/', methods=['POST'])
-def echoMsg():
+def bot_func():
 	data = request.get_json()
 
 	if data['name'] != 'EchoBot':
-		msg = '{}, you sent "{}".'.format(data['name'], data['text'])
+		msg = echoMsg(data)
 		sendMessage(msg)
 
 	return "ok", 200
+
+def echoMsg(data):
+	if data['name'] != 'EchoBot':
+		msg = '{}, you sent "{}".'.format(data['name'], data['text'])
+	return msg
 
 def sendMessage(msg):
 	url = 'https://api.groupme.com/v3/bots/post'
