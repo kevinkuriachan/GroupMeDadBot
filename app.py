@@ -53,7 +53,7 @@ def sendMock(data, name):
 					'attachments': [
 						{
 							'type':'image',
-							'image_url': 'https://i.groupme.com/680x440.jpeg.79e45e144bd142939afc4840c18a2169'
+							'url': 'https://i.groupme.com/680x440.jpeg.79e45e144bd142939afc4840c18a2169'
 						}
 						]
 					}
