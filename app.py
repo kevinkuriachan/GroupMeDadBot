@@ -34,16 +34,15 @@ def sendMessage(msg):
 def pureEcho(data):
 	return data['text']
 
-def mock(data, name):
-	if data['name'] == name:
-		preCap = data['text']
-		msg = ''
-		for index in range(len(preCap)):
-			if (index%2 == 0):
-				msg = msg+preCap[index].lower()
-			else:
-				msg = msg+preCap[index].upper()
-		return msg
+def mock(data):
+	preCap = data['text']
+	msg = ''
+	for index in range(len(preCap)):
+		if (index%2 == 0):
+			msg = msg+preCap[index].lower()
+		else:
+			msg = msg+preCap[index].upper()
+	return msg
 
 def sendMock(data,name):
 	if(data['name']==name):
