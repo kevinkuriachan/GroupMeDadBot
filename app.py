@@ -12,7 +12,7 @@ def bot_func():
 	data = request.get_json()
 
 	if data['name'] != 'Colby Mock Bot':
-		sendMock(data, 'Colby Lorenz')
+		sendMockColby(data, 'Colby Lorenz')
 
 	return "ok", 200
 
@@ -60,6 +60,25 @@ def sendMock(data, name):
 		url = 'https://api.groupme.com/v3/bots/post'
 		request = Request(url, urlencode(msgData).encode())
 		json = urlopen(request).read().decode()
+
+
+def sendMockColby(data, name):
+	if(data['name']==name):
+		msg = mock(data)
+		msgData = {
+					'bot_id' : os.getenv('GROUPME_COLBYBOT_ID'),
+					'text' : msg,
+					'attachments': [
+						{
+							'type':'image',
+							'url': 'https://i.groupme.com/680x440.jpeg.79e45e144bd142939afc4840c18a2169.large'
+						}
+						]
+					}
+		url = 'https://api.groupme.com/v3/bots/post'
+		request = Request(url, urlencode(msgData).encode())
+		json = urlopen(request).read().decode()
+
 
 def getDadMsg(data):
 	msgRec = data['text']
