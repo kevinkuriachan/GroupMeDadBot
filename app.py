@@ -14,6 +14,10 @@ def bot_func():
 	if data['name'] != 'Colby Mock Bot':
 		sendMockColby(data, 'Colby Lorenz')
 
+	if data['group_id'] == '41474681':
+		if data['name'] != 'DadBot':
+			sendDadMsg(data)
+
 	return "ok", 200
 
 def echoMsg(data):
