@@ -60,3 +60,31 @@ def sendMock(data, name):
 		url = 'https://api.groupme.com/v3/bots/post'
 		request = Request(url, urlencode(msgData).encode())
 		json = urlopen(request).read().decode()
+
+def getDadMsg(data):
+	msgRec = data['text']
+	msgSend = ""
+	if ("I'm" in msgRec):
+	    start = msgRec.find("I'm") + 4
+	    print("in loop")
+	    name = ""
+	    for index in range(start, len(msgRec)):
+	        if msgRec[index] == ".":
+	            break
+	        name = name+msgRec[index]
+	        print(name)
+	    msgSend = "Hi " + name + ", I'm Dad."
+	return msgSend
+
+def sendDadMsg(data):
+	if ("I'm" in data['text']):
+		url = 'https://api.groupme.com/v3/bots/post'
+		
+		msg = getDadMsg(data)
+		
+		data = {
+				'bot_id' : os.getenv('GROUPME_DADBOT_ID'),
+				'text' : msg,
+				}
+		request = Request(url, urlencode(data).encode())
+		json = urlopen(request).read().decode()
