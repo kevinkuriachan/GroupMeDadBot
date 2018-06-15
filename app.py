@@ -11,8 +11,8 @@ app = Flask(__name__)
 def bot_func():
 	data = request.get_json()
 
-	if data['name'] != 'EchoBot':
-		sendMock(data, 'Kevin Kuriachan')
+	if data['name'] != 'Colby Mock Bot':
+		sendMock(data, 'Colby Lorenz')
 
 	return "ok", 200
 
@@ -81,7 +81,7 @@ def sendDadMsg(data):
 		url = 'https://api.groupme.com/v3/bots/post'
 		
 		msg = getDadMsg(data)
-		
+
 		data = {
 				'bot_id' : os.getenv('GROUPME_DADBOT_ID'),
 				'text' : msg,
