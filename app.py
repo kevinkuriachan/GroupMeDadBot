@@ -1,6 +1,7 @@
 from flask import Flask, request
 import os
 import json
+import random
 
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
@@ -42,7 +43,7 @@ def mock(data):
 	preCap = data['text']
 	msg = ''
 	for index in range(len(preCap)):
-		if (index%2 == 0):
+		if (index%2 == random.randint(0,1)):
 			msg = msg+preCap[index].lower()
 		else:
 			msg = msg+preCap[index].upper()
