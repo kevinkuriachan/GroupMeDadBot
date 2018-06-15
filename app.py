@@ -15,9 +15,8 @@ def bot_func():
 	if data['name'] != 'Colby Mock Bot':
 		sendMockColby(data, 'Colby Lorenz')
 
-	if data['group_id'] == '41474681':
-		if data['name'] != 'DadBot':
-			sendDadMsg(data)
+	if data['name'] != 'DadBot':
+		sendDadMsg(data)
 
 	return "ok", 200
 
@@ -42,8 +41,9 @@ def pureEcho(data):
 def mock(data):
 	preCap = data['text']
 	msg = ''
+	zeroOrOne = random.randint(0,1)
 	for index in range(len(preCap)):
-		if (index%2 == random.randint(0,1)):
+		if (index%2 == zeroOrOne):
 			msg = msg+preCap[index].lower()
 		else:
 			msg = msg+preCap[index].upper()
