@@ -8,6 +8,14 @@ from urllib.request import Request, urlopen
 
 app = Flask(__name__)
 
+#set the bot id's of each bot from environment variables:
+
+GROUPME_DADBOT_ID = os.getenv('GROUPME_DADBOT_ID')
+GROUPME_COLBYBOT_ID = os.getenv('GROUPME_COLBYBOT_ID')
+
+
+#create a route for each bot
+
 @app.route('/', methods=['POST'])
 def bot_func():
 	data = request.get_json()
@@ -19,6 +27,25 @@ def bot_func():
 		sendDadMsg(data)
 
 	return "ok", 200
+
+
+@app.route('/dadbot', methods=['POST'])
+def dadBotFunc():
+
+
+
+	return ok, 200
+
+
+@app.route('/colbymockbot', methods=['POST'])
+def colbyMockBotFunc():
+
+
+
+	return ok, 200
+
+
+
 
 def echoMsg(data):
 	if data['name'] != 'Mock Bot':
@@ -54,13 +81,7 @@ def sendMock(data, name):
 		msg = mock(data)
 		msgData = {
 					'bot_id' : os.getenv('GROUPME_DADBOT_ID'),
-					'text' : msg,
-					'attachments': [
-						{
-							'type':'image',
-							'url': 'https://i.groupme.com/680x440.jpeg.79e45e144bd142939afc4840c18a2169.large'
-						}
-						]
+					'text' : msg
 					}
 		url = 'https://api.groupme.com/v3/bots/post'
 		request = Request(url, urlencode(msgData).encode())
@@ -73,12 +94,6 @@ def sendMockColby(data, name):
 		msgData = {
 					'bot_id' : os.getenv('GROUPME_COLBYBOT_ID'),
 					'text' : msg,
-					'attachments': [
-						{
-							'type':'image',
-							'url': 'https://i.groupme.com/680x440.jpeg.79e45e144bd142939afc4840c18a2169.large'
-						}
-						]
 					}
 		url = 'https://api.groupme.com/v3/bots/post'
 		request = Request(url, urlencode(msgData).encode())
@@ -135,3 +150,25 @@ def sendDadMsg(data):
 				}
 		request = Request(url, urlencode(data).encode())
 		json = urlopen(request).read().decode()
+
+
+
+
+
+class Bot:
+	def __init__(self, BOT_ID):
+		self.BOT_ID = BOT_ID
+
+	def SendMessage(self, message):
+		url = 'https://api.groupme.com/v3/bots/post'
+	
+		data = {
+				'bot_id' : self.BOT_ID,
+				'text' : message,
+				}
+		request = Request(url, urlencode(data).encode())
+		json = urlopen(request).read().decode()
+
+
+
+dadBot = Bot(GROUPME_DADBOT_ID)
