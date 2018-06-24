@@ -96,7 +96,7 @@ def rootPage():
 def dadBotFunc():
 	data = request.get_json()
 	if (data['name'] == 'DadBot'):
-		return ok, 200
+		return "ok", 200
 	dadBot = DadBot(GROUPME_DADBOT_ID)
 	print(data)
 	dadBot.SendDadMessage(data['text'])
@@ -110,9 +110,22 @@ def dadBotFunc():
 def colbyMockBotFunc():
 	data = request.get_json()
 	if data['name'] == 'Colby Mock Bot':
-		return ok, 200
+		return "ok", 200
 	colbyMockBot = MockBot(GROUPME_COLBYBOT_ID, 'Colby Lorenz')
 	colbyMockBot.Mock(data)
 
 	return "ok", 200
 
+GROUPME_FAM_DAD_ID = os.getenv('GROUPME_FAM_DAD_ID')
+@app.route('/nerdvalley', methods=['POST'])
+def nerdValley():
+	data = request.get_json()
+	if (data['name'] == 'DadBot'):
+		return "ok", 200
+	dadBot = DadBot(GROUPME_DADBOT_ID)
+	print(data)
+	dadBot.SendDadMessage(data['text'])
+	if "@DadBot" in data['text']:
+		dadBot.SendDadJoke()
+
+	return "ok", 200
