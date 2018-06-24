@@ -44,8 +44,8 @@ class DadBot(Bot):
 	def __init__(self, BOT_ID):
 		super().__init__(BOT_ID)
 
-	jokesList = open('dadjokes.txt','r').readlines()
 	def SendDadJoke(self):
+		jokesList = open('dadjokes.txt','r').readlines()
 		joke = jokesList[random.randint(0, len(jokesList)-1)].strip('\n')
 		self.SendMessage(joke)
 
