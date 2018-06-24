@@ -119,6 +119,8 @@ def dadBotFunc():
 	dadBot = DadBot(GROUPME_DADBOT_ID)
 	print(data)
 	dadBot.SendDadMessage(data['text'])
+	if "@DadBot" in data['text']:
+		dadBot.SendDadJoke()
 
 	return "ok", 200
 
