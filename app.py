@@ -120,7 +120,7 @@ def dadBotFunc():
 	print(data)
 	dadBot.SendDadMessage(data['text'])
 
-	return ok, 200
+	return "ok", 200
 
 
 @app.route('/colbymockbot', methods=['POST'])
@@ -131,5 +131,5 @@ def colbyMockBotFunc():
 	colbyMockBot = MockBot(GROUPME_COLBYBOT_ID, 'Colby Lorenz')
 	colbyMockBot.Mock(data)
 
-	return ok, 200
+	return "ok", 200
 
