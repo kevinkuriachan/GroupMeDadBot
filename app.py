@@ -66,8 +66,9 @@ class DadBot(Bot):
 		        if msgRec[index] == ".":
 		            break
 		        name = name+msgRec[index]
-		    msgSend = "Hi " + name + ", I'm Dad."	
-		self.SendMessage(msgSend)
+		    msgSend = "Hi " + name + ", I'm Dad."
+		if msgSend != "":	
+			self.SendMessage(msgSend)
 
 
 class MockBot(Bot):
@@ -115,7 +116,7 @@ def dadBotFunc():
 	data = request.get_json()
 	dadBot = DadBot(GROUPME_DADBOT_ID)
 	print(data)
-	dadBot.SendDadMessage()
+	dadBot.SendDadMessage(data['text'])
 
 	return ok, 200
 
