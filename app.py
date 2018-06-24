@@ -15,17 +15,6 @@ GROUPME_COLBYBOT_ID = os.getenv('GROUPME_COLBYBOT_ID')
 
 # Classes for bots:
 
-def sendMessage(msg):
-	url = 'https://api.groupme.com/v3/bots/post'
-	
-	data = {
-			'bot_id' : os.getenv('GROUPME_DADBOT_ID'),
-			'text' : msg,
-			}
-	request = Request(url, urlencode(data).encode())
-	json = urlopen(request).read().decode()
-
-
 class Bot:
 	def __init__(self, BOT_ID):
 		self.BOT_ID = BOT_ID
@@ -98,8 +87,8 @@ class EchoBot(Bot):
 
 #create a route for each bot
 
-@app.route('/', methods=['POST'])
-def bot_func():
+@app.route('/')
+def rootPage():
 	return "GroupMe bots code located at 'github.com/kevinkuriachan/GroupMeDadBot'"
 
 
