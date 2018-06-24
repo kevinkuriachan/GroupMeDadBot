@@ -114,6 +114,8 @@ def bot_func():
 @app.route('/dadbot', methods=['POST'])
 def dadBotFunc():
 	data = request.get_json()
+	if (data['name'] == 'DadBot'):
+		return ok, 200
 	dadBot = DadBot(GROUPME_DADBOT_ID)
 	print(data)
 	dadBot.SendDadMessage(data['text'])
@@ -124,6 +126,8 @@ def dadBotFunc():
 @app.route('/colbymockbot', methods=['POST'])
 def colbyMockBotFunc():
 	data = request.get_json()
+	if data['name'] == 'Colby Mock Bot':
+		return ok, 200
 	colbyMockBot = MockBot(GROUPME_COLBYBOT_ID, 'Colby Lorenz')
 	colbyMockBot.Mock(data)
 
