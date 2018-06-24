@@ -122,7 +122,7 @@ def nerdValley():
 	data = request.get_json()
 	if (data['name'] == 'DadBot'):
 		return "ok", 200
-	dadBot = DadBot(GROUPME_DADBOT_ID)
+	dadBot = DadBot(GROUPME_FAM_DAD_ID)
 	print(data)
 	dadBot.SendDadMessage(data['text'])
 	if "@DadBot" in data['text']:
