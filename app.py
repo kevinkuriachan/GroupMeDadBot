@@ -100,15 +100,7 @@ class EchoBot(Bot):
 
 @app.route('/', methods=['POST'])
 def bot_func():
-	data = request.get_json()
-
-	if data['name'] != 'Colby Mock Bot':
-		sendMockColby(data, 'Colby Lorenz')
-
-	if data['name'] != 'DadBot':
-		sendDadMsg(data)
-
-	return "ok", 200
+	return "GroupMe bots code located at 'github.com/kevinkuriachan/GroupMeDadBot'"
 
 
 @app.route('/dadbot', methods=['POST'])
