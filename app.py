@@ -46,7 +46,7 @@ class DadBot(Bot):
 
 	def SendDadJoke(self):
 		jokesList = open('dadjokes.txt','r').readlines()
-		joke = jokesList[random.randint(0, len(jokesList)-1)].strip('\n')
+		joke = random.choice(jokesList).strip('\n')
 		self.SendMessage(joke)
 
 	def SendDadMessage(self, msgRec):
