@@ -49,7 +49,7 @@ class DadBot(Bot):
 		joke = jokesList[random.randint(0, len(jokesList)-1)].strip('\n')
 		self.SendMessage(joke)
 
-	def SendDadMessage(msgRec):
+	def SendDadMessage(self, msgRec):
 		msgSend = ""
 		if ("I'm" in msgRec):
 		    start = msgRec.find("I'm") + 4
