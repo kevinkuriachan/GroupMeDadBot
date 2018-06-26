@@ -62,11 +62,11 @@ class DadBot(Bot):
 
 
 class MockBot(Bot):
-	def __init__(self, BOT_ID, name):
+	def __init__(self, BOT_ID, nameToMock):
 		super().__init__(BOT_ID)
 
 	def Mock(self, data):
-		if data['name'] == self.name:
+		if data['name'] == self.nameToMock:
 			msg = ''
 			zeroOrOne = random.randint(0,1)
 			for index in range(len(preCap)):
@@ -86,7 +86,7 @@ class EchoBot(Bot):
 			self.SendMessage(msg)
 
 
-#create a route for each bot
+#create an instance and route for each bot
 
 @app.route('/')
 def rootPage():
