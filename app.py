@@ -12,6 +12,7 @@ app = Flask(__name__)
 
 GROUPME_DADBOT_ID = os.getenv('GROUPME_DADBOT_ID')
 GROUPME_COLBYBOT_ID = os.getenv('GROUPME_COLBYBOT_ID')
+GROUPME_FAM_DAD_ID = os.getenv('GROUPME_FAM_DAD_ID')
 
 # Classes for bots:
 
@@ -91,41 +92,37 @@ class EchoBot(Bot):
 def rootPage():
 	return "GroupMe bots code located at 'github.com/kevinkuriachan/GroupMeDadBot'"
 
-
+testDadBot = DadBot(GROUPME_DADBOT_ID)
 @app.route('/dadbot', methods=['POST'])
 def dadBotFunc():
 	data = request.get_json()
 	if (data['name'] == 'DadBot'):
-		return "ok", 200
-	dadBot = DadBot(GROUPME_DADBOT_ID)
-	print(data)
-	dadBot.SendDadMessage(data['text'])
+		return "ok", 200	
+	testDadBot.SendDadMessage(data['text'])
 	if "@DadBot" in data['text']:
-		dadBot.SendDadJoke()
+		testDadBot.SendDadJoke()
 
 	return "ok", 200
 
-
+colbyMockBot = MockBot(GROUPME_COLBYBOT_ID, 'Colby Lorenz')
 @app.route('/colbymockbot', methods=['POST'])
 def colbyMockBotFunc():
 	data = request.get_json()
 	if data['name'] == 'Colby Mock Bot':
 		return "ok", 200
-	colbyMockBot = MockBot(GROUPME_COLBYBOT_ID, 'Colby Lorenz')
 	colbyMockBot.Mock(data)
 
 	return "ok", 200
 
-GROUPME_FAM_DAD_ID = os.getenv('GROUPME_FAM_DAD_ID')
+
+famDadBot = DadBot(GROUPME_FAM_DAD_ID)
 @app.route('/nerdvalley', methods=['POST'])
 def nerdValley():
 	data = request.get_json()
 	if (data['name'] == 'DadBot'):
-		return "ok", 200
-	dadBot = DadBot(GROUPME_FAM_DAD_ID)
-	print(data)
-	dadBot.SendDadMessage(data['text'])
+		return "ok", 200	
+	famDadBot.SendDadMessage(data['text'])
 	if "@DadBot" in data['text']:
-		dadBot.SendDadJoke()
+		famDadBot.SendDadJoke()
 
 	return "ok", 200
