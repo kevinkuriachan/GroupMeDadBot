@@ -98,6 +98,7 @@ testDadBot = DadBot(GROUPME_DADBOT_ID, 'DadBot')
 testDadBotActive = True
 @app.route('/dadbot', methods=['POST'])
 def dadBotFunc():
+	global testDadBotActive
 	data = request.get_json()
 	if (data['name'] == testDadBot.name):
 		return "ok", 200
@@ -121,6 +122,7 @@ colbyMockBot = MockBot(GROUPME_COLBYBOT_ID, 'Colby Mock Bot', 'Colby Lorenz')
 mockOrNo = True
 @app.route('/colbymockbot', methods=['POST'])
 def colbyMockBotFunc():
+	global mockOrNo
 	data = request.get_json()
 	if data['name'] == colbyMockBot.name:
 		return "ok", 200
