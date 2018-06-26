@@ -95,10 +95,21 @@ def rootPage():
 	return "GroupMe bots code located at 'github.com/kevinkuriachan/GroupMeDadBot'"
 
 testDadBot = DadBot(GROUPME_DADBOT_ID, 'DadBot')
+testDadBotActive = True
 @app.route('/dadbot', methods=['POST'])
 def dadBotFunc():
 	data = request.get_json()
 	if (data['name'] == testDadBot.name):
+		return "ok", 200
+	msg = data['text']
+	if "@DadBot toggle" in msg:
+		testDadBotActive = !testDadBotActive
+		if (testDadBotActive):
+			msgToSend = "DadBot Active"
+		else:
+			msgToSend = "DadBot Disabled"
+		testDadBot.SendMessage(msgToSend)
+	if !testDadBotActive:
 		return "ok", 200	
 	testDadBot.SendDadMessage(data['text'])
 	if "@DadBot" in data['text']:
