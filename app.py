@@ -70,11 +70,11 @@ class MockBot(Bot):
 		if data['name'] == self.nameToMock:
 			msg = ''
 			zeroOrOne = random.randint(0,1)
-			for index in range(len(preCap)):
+			for index in range(len(data['text'])):
 				if (index%2 == zeroOrOne):
-					msg = msg+preCap[index].lower()
+					msg = msg+data['text'][index].lower()
 				else:
-					msg = msg+preCap[index].upper()
+					msg = msg+data['text'][index].upper()
 			self.SendMessage(msg)
 		
 class EchoBot(Bot):
