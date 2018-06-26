@@ -58,7 +58,7 @@ class DadBot(Bot):
 		            break
 		        name = name+msgRec[index]
 		    msgSend = "Hi " + name + ", I'm Dad."
-		if msgSend not = "":	
+		if msgSend != "":	
 			self.SendMessage(msgSend)
 
 
@@ -83,7 +83,7 @@ class EchoBot(Bot):
 		super().__init__(BOT_ID, name)
 
 	def EchoMsg(data):
-		if data['name'] not = 'Mock Bot':
+		if data['name'] != 'Mock Bot':
 			msg = '{} sent "{}".'.format(data['name'], data['text'])
 			self.SendMessage(msg)
 
