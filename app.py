@@ -68,13 +68,14 @@ class MockBot(Bot):
 		self.nameToMock = nameToMock
 	def Mock(self, data):
 		if data['name'] == self.nameToMock:
+			msgOrig = data['text']
 			msg = ''
 			zeroOrOne = random.randint(0,1)
-			for index in range(len(data['text'])):
+			for index in range(len(msgOrig)):
 				if (index%2 == zeroOrOne):
-					msg = msg+data['text'][index].lower()
+					msg = msg+msgOrig[index].lower()
 				else:
-					msg = msg+data['text'][index].upper()
+					msg = msg+msgOrig[index].upper()
 			self.SendMessage(msg)
 		
 class EchoBot(Bot):
@@ -106,10 +107,21 @@ def dadBotFunc():
 	return "ok", 200
 
 colbyMockBot = MockBot(GROUPME_COLBYBOT_ID, 'Colby Mock Bot', 'Colby Lorenz')
+mockOrNo = True
 @app.route('/colbymockbot', methods=['POST'])
 def colbyMockBotFunc():
 	data = request.get_json()
 	if data['name'] == colbyMockBot.name:
+		return "ok", 200
+	msg = data['text']
+	if "@MockBot toggle" in msg:
+		mockOrNo = !mockOrNo
+		if (mockOrNo):
+			msgToSend = "Mock Bot Active"
+		else:
+			msgToSend = "Mock Bot Disabled"
+		colbyMockBot.SendMessage(msgToSend)
+	if !mockOrNo:
 		return "ok", 200
 	colbyMockBot.Mock(data)
 
