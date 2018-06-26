@@ -58,7 +58,7 @@ class DadBot(Bot):
 		            break
 		        name = name+msgRec[index]
 		    msgSend = "Hi " + name + ", I'm Dad."
-		if msgSend != "":	
+		if msgSend not = "":	
 			self.SendMessage(msgSend)
 
 
@@ -83,7 +83,7 @@ class EchoBot(Bot):
 		super().__init__(BOT_ID, name)
 
 	def EchoMsg(data):
-		if data['name'] != 'Mock Bot':
+		if data['name'] not = 'Mock Bot':
 			msg = '{} sent "{}".'.format(data['name'], data['text'])
 			self.SendMessage(msg)
 
@@ -103,13 +103,13 @@ def dadBotFunc():
 		return "ok", 200
 	msg = data['text']
 	if "@DadBot toggle" in msg:
-		testDadBotActive = !testDadBotActive
+		testDadBotActive = not testDadBotActive
 		if (testDadBotActive):
 			msgToSend = "DadBot Active"
 		else:
 			msgToSend = "DadBot Disabled"
 		testDadBot.SendMessage(msgToSend)
-	if !testDadBotActive:
+	if not testDadBotActive:
 		return "ok", 200	
 	testDadBot.SendDadMessage(data['text'])
 	if "@DadBot" in data['text']:
@@ -126,13 +126,13 @@ def colbyMockBotFunc():
 		return "ok", 200
 	msg = data['text']
 	if "@MockBot toggle" in msg:
-		mockOrNo = !mockOrNo
+		mockOrNo = not mockOrNo
 		if (mockOrNo):
 			msgToSend = "Mock Bot Active"
 		else:
 			msgToSend = "Mock Bot Disabled"
 		colbyMockBot.SendMessage(msgToSend)
-	if !mockOrNo:
+	if not mockOrNo:
 		return "ok", 200
 	colbyMockBot.Mock(data)
 
