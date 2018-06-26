@@ -17,8 +17,9 @@ GROUPME_FAM_DAD_ID = os.getenv('GROUPME_FAM_DAD_ID')
 # Classes for bots:
 
 class Bot:
-	def __init__(self, BOT_ID):
+	def __init__(self, BOT_ID, name):
 		self.BOT_ID = BOT_ID
+		self.name = name
 
 	def SendMessage(self, message):
 		url = 'https://api.groupme.com/v3/bots/post'
@@ -31,8 +32,8 @@ class Bot:
 		json = urlopen(request).read().decode()
 
 class DadBot(Bot):
-	def __init__(self, BOT_ID):
-		super().__init__(BOT_ID)
+	def __init__(self, BOT_ID, name):
+		super().__init__(BOT_ID, name)
 
 	def SendDadJoke(self):
 		jokesList = open('dadjokes.txt','r').readlines()
@@ -62,9 +63,9 @@ class DadBot(Bot):
 
 
 class MockBot(Bot):
-	def __init__(self, BOT_ID, nameToMock):
-		super().__init__(BOT_ID)
-
+	def __init__(self, BOT_ID, name, nameToMock):
+		super().__init__(BOT_ID, name)
+		self.nameToMock = nameToMock
 	def Mock(self, data):
 		if data['name'] == self.nameToMock:
 			msg = ''
@@ -77,8 +78,8 @@ class MockBot(Bot):
 			self.SendMessage(msg)
 		
 class EchoBot(Bot):
-	def __init__(self, BOT_ID):
-		super().__init__(BOT_ID)
+	def __init__(self, BOT_ID, name):
+		super().__init__(BOT_ID, name)
 
 	def EchoMsg(data):
 		if data['name'] != 'Mock Bot':
@@ -92,11 +93,11 @@ class EchoBot(Bot):
 def rootPage():
 	return "GroupMe bots code located at 'github.com/kevinkuriachan/GroupMeDadBot'"
 
-testDadBot = DadBot(GROUPME_DADBOT_ID)
+testDadBot = DadBot(GROUPME_DADBOT_ID, 'DadBot')
 @app.route('/dadbot', methods=['POST'])
 def dadBotFunc():
 	data = request.get_json()
-	if (data['name'] == 'DadBot'):
+	if (data['name'] == testDadBot.name):
 		return "ok", 200	
 	testDadBot.SendDadMessage(data['text'])
 	if "@DadBot" in data['text']:
@@ -104,22 +105,22 @@ def dadBotFunc():
 
 	return "ok", 200
 
-colbyMockBot = MockBot(GROUPME_COLBYBOT_ID, 'Colby Lorenz')
+colbyMockBot = MockBot(GROUPME_COLBYBOT_ID, 'Colby Mock Bot', 'Colby Lorenz')
 @app.route('/colbymockbot', methods=['POST'])
 def colbyMockBotFunc():
 	data = request.get_json()
-	if data['name'] == 'Colby Mock Bot':
+	if data['name'] == colbyMockBot.name:
 		return "ok", 200
 	colbyMockBot.Mock(data)
 
 	return "ok", 200
 
 
-famDadBot = DadBot(GROUPME_FAM_DAD_ID)
+famDadBot = DadBot(GROUPME_FAM_DAD_ID, DadBot)
 @app.route('/nerdvalley', methods=['POST'])
 def nerdValley():
 	data = request.get_json()
-	if (data['name'] == 'DadBot'):
+	if (data['name'] == famDadBot.name):
 		return "ok", 200	
 	famDadBot.SendDadMessage(data['text'])
 	if "@DadBot" in data['text']:
