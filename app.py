@@ -2,6 +2,7 @@ from flask import Flask, request
 import os
 import json
 import random
+import praw
 
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
@@ -14,12 +15,22 @@ GROUPME_DADBOT_ID = os.getenv('GROUPME_DADBOT_ID')
 GROUPME_COLBYBOT_ID = os.getenv('GROUPME_COLBYBOT_ID')
 GROUPME_FAM_DAD_ID = os.getenv('GROUPME_FAM_DAD_ID')
 
+
+#creating a reddit instance
+
+reddit = praw.Reddit(client_id = os.getenv('redditID'), client_secret = os.getenv('redditSecret'), user_agent = 'my user agent')
+
 # Classes for bots:
 
 class Bot:
+
+	self.isActive = True
+	## TODO: find a way to add persistence to characteristics across multiple runs of the app
+
 	def __init__(self, BOT_ID, name):
 		self.BOT_ID = BOT_ID
 		self.name = name
+
 
 	def SendMessage(self, message):
 		url = 'https://api.groupme.com/v3/bots/post'
@@ -31,11 +42,16 @@ class Bot:
 		request = Request(url, urlencode(data).encode())
 		json = urlopen(request).read().decode()
 
+	def Deactivate(self):
+		self.isActive = False
+	def Active(self):
+		self.isActive = True
+
 class DadBot(Bot):
 	def __init__(self, BOT_ID, name):
 		super().__init__(BOT_ID, name)
 
-	def SendDadJoke(self):
+	def SendDadJokeFromList(self):
 		jokesList = open('dadjokes.txt','r').readlines()
 		joke = random.choice(jokesList).strip('\n')
 		self.SendMessage(joke)
@@ -60,7 +76,16 @@ class DadBot(Bot):
 		    msgSend = "Hi " + name + ", I'm Dad."
 		if msgSend != "":	
 			self.SendMessage(msgSend)
-
+			
+	def SendDadJokeFromReddit(self): # picks a random hot post from r/dadjokes
+		submissions = list(reddit.subreddit('dadjokes').hot(limit=150))
+		submission = random.choice(submissions)
+    	msg = submission.title
+		acceptableEnds = ['.', ':', '?', '!']
+		if (msg[-1] not in acceptableEnds):
+		    msg = msg+"."
+		msg = msg+ " " +submission.selftext
+		self.SendMessage(msg)
 
 class MockBot(Bot):
 	def __init__(self, BOT_ID, name, nameToMock):
@@ -114,7 +139,7 @@ def dadBotFunc():
 		return "ok", 200	
 	testDadBot.SendDadMessage(data['text'])
 	if "@DadBot" in data['text']:
-		testDadBot.SendDadJoke()
+		testDadBot.SendDadJokeFromReddit()
 
 	return "ok", 200
 
@@ -149,6 +174,6 @@ def nerdValley():
 		return "ok", 200	
 	famDadBot.SendDadMessage(data['text'])
 	if "@DadBot" in data['text']:
-		famDadBot.SendDadJoke()
+		famDadBot.SendDadJokeFromReddit()
 
 	return "ok", 200
