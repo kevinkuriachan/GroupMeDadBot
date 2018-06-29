@@ -24,13 +24,13 @@ reddit = praw.Reddit(client_id = os.getenv('redditID'), client_secret = os.geten
 
 class Bot:
 
-	self.isActive = True
+	
 	## TODO: find a way to add persistence to characteristics across multiple runs of the app
 
 	def __init__(self, BOT_ID, name):
 		self.BOT_ID = BOT_ID
 		self.name = name
-
+		self.isActive = True
 
 	def SendMessage(self, message):
 		url = 'https://api.groupme.com/v3/bots/post'
