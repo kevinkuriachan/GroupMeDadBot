@@ -83,7 +83,7 @@ class DadBot(Bot):
 		msg = submission.title
 		acceptableEnds = ['.', ':', '?', '!']
 		if (msg[-1] not in acceptableEnds):
-		msg = msg+"."
+			msg = msg+"."
 		msg = msg+ " " +submission.selftext
 		self.SendMessage(msg)
 
