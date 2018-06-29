@@ -76,14 +76,14 @@ class DadBot(Bot):
 		    msgSend = "Hi " + name + ", I'm Dad."
 		if msgSend != "":	
 			self.SendMessage(msgSend)
-			
+
 	def SendDadJokeFromReddit(self): # picks a random hot post from r/dadjokes
 		submissions = list(reddit.subreddit('dadjokes').hot(limit=150))
 		submission = random.choice(submissions)
-    	msg = submission.title
+		msg = submission.title
 		acceptableEnds = ['.', ':', '?', '!']
 		if (msg[-1] not in acceptableEnds):
-		    msg = msg+"."
+		msg = msg+"."
 		msg = msg+ " " +submission.selftext
 		self.SendMessage(msg)
 
