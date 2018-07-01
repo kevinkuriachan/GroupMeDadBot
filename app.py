@@ -30,12 +30,12 @@ class Bot:
 	isActive = True
 
 	def saveStatus(self):
-		with open(self.BOT_ID+"Status.pkl") as file:
+		with open(self.BOT_ID+"Status.pkl", "wb") as file:
 				pickle.dump(self, file)
 
 	def loadStatus(self):
 		if(os.path.isfile(self.BOT_ID+"Status.pkl")):
-			with open(self.BOT_ID+"Status.pkl") as file:
+			with open(self.BOT_ID+"Status.pkl", "rb") as file:
 				obj = pickle.load(file)
 			if obj.isActive == False:
 				self.isActive = False
