@@ -155,7 +155,7 @@ def dadBotFunc():
 	msg = data['text']
 	if "@DadBot toggle" in msg:
 		testDadBot.Toggle()
-	if not testDadBotActive:
+	if not testDadBot.isActive:
 		return "ok", 200	
 	testDadBot.SendDadMessage(data['text'])
 	if ("@DadBot" in data['text']) and ("toggle" not in data['text']):
