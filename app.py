@@ -3,6 +3,7 @@ import os
 import json
 import random
 import praw
+import pickle
 
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
@@ -26,11 +27,26 @@ class Bot:
 
 	
 	## TODO: find a way to add persistence to characteristics across multiple runs of the app
+	isActive = True
+
+	def saveStatus(self):
+		with open(self.BOT_ID+"Status.pkl") as file:
+				pickle.dump(self, file)
+
+	def loadStatus(self):
+		if(os.path.isfile(self.BOT_ID+"Status.pkl")):
+			with open(self.BOT_ID+"Status.pkl") as file:
+				obj = pickle.load(file)
+			if obj.isActive == False:
+				self.isActive = False
+		else:
+			 self.saveStatus()
 
 	def __init__(self, BOT_ID, name):
 		self.BOT_ID = BOT_ID
 		self.name = name
 		self.isActive = True
+		self.loadStatus()
 
 	def SendMessage(self, message):
 		url = 'https://api.groupme.com/v3/bots/post'
@@ -44,8 +60,18 @@ class Bot:
 
 	def Deactivate(self):
 		self.isActive = False
+		self.saveStatus()
+		self.SendMessage("@"+self.name+" diabled")
 	def Active(self):
 		self.isActive = True
+		self.saveStatus()
+		self.SendMessage("@"+self.name+" enabled") 
+
+	def Toggle(self):
+		if self.isActive:
+			self.Deactivate()
+		else:
+			self.Active()
 
 class DadBot(Bot):
 	def __init__(self, BOT_ID, name):
@@ -113,6 +139,7 @@ class EchoBot(Bot):
 			self.SendMessage(msg)
 
 
+
 #create an instance and route for each bot
 
 @app.route('/')
@@ -120,46 +147,32 @@ def rootPage():
 	return "GroupMe bots code located at 'github.com/kevinkuriachan/GroupMeDadBot'"
 
 testDadBot = DadBot(GROUPME_DADBOT_ID, 'DadBot')
-testDadBotActive = True
 @app.route('/dadbot', methods=['POST'])
 def dadBotFunc():
-	global testDadBotActive
 	data = request.get_json()
 	if (data['name'] == testDadBot.name):
 		return "ok", 200
 	msg = data['text']
 	if "@DadBot toggle" in msg:
-		testDadBotActive = not testDadBotActive
-		if (testDadBotActive):
-			msgToSend = "DadBot Active"
-		else:
-			msgToSend = "DadBot Disabled"
-		testDadBot.SendMessage(msgToSend)
+		testDadBot.Toggle()
 	if not testDadBotActive:
 		return "ok", 200	
 	testDadBot.SendDadMessage(data['text'])
-	if "@DadBot" in data['text']:
+	if ("@DadBot" in data['text']) and ("toggle" not in data['text']):
 		testDadBot.SendDadJokeFromReddit()
 
 	return "ok", 200
 
 colbyMockBot = MockBot(GROUPME_COLBYBOT_ID, 'Colby Mock Bot', 'Colby Lorenz')
-mockOrNo = True
 @app.route('/colbymockbot', methods=['POST'])
 def colbyMockBotFunc():
-	global mockOrNo
 	data = request.get_json()
 	if data['name'] == colbyMockBot.name:
 		return "ok", 200
 	msg = data['text']
 	if "@MockBot toggle" in msg:
-		mockOrNo = not mockOrNo
-		if (mockOrNo):
-			msgToSend = "Mock Bot Active"
-		else:
-			msgToSend = "Mock Bot Disabled"
-		colbyMockBot.SendMessage(msgToSend)
-	if not mockOrNo:
+		colbyMockBot.Toggle()
+	if not colbyMockBot.isActive:
 		return "ok", 200
 	colbyMockBot.Mock(data)
 
