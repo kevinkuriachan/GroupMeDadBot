@@ -152,14 +152,15 @@ class IntroBot(Bot):
 def rootPage():
 	return "GroupMe bots code located at 'github.com/kevinkuriachan/GroupMeDadBot'"
 
-introBot = IntroBot(GROUPME_HOWDYBOT_ID, 'HowdtBot')
+introBot = IntroBot(GROUPME_HOWDYBOT_ID, 'HowdyBot')
 @app.route('/LFjoin')
 def introFunc():
 	data = request.get_json()
+	print("inside intro bot route")
+	print(data)
 	if (data['name'] == introBot.name):
 		return "ok", 200
-	print('inside intro bot route')
-	print(data)
+	
 	return "ok", 200
 
 testDadBot = DadBot(GROUPME_DADBOT_ID, 'DadBot')
