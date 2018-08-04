@@ -4,7 +4,6 @@ import json
 import random
 import praw
 import pickle
-import logging
 
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
@@ -144,18 +143,8 @@ class IntroBot(Bot):
 	def __init__(self, BOT_ID, name):
 		super().__init__(BOT_ID, name)
 	def Intro():
-		msg = "Howdy! Welcome to the LechFadden community! Who is your SA parent and what floor are you on? Feel free to tell us about yourself."
+		msg = "Howdy! Welcome to the LechFadden community! Who is your SA parent and what floor are you on? Please tell us about yourself."
 		self.SendMessage(msg)
-
-log = logging.getLogger()
-
-console = logging.StreamHandler()
-log.addHandler(console)
-
-log.warn('testing out logger')
-
-def printSomething(stuff):
-	print(stuff)
 
 @app.route('/')
 def rootPage():
@@ -165,11 +154,13 @@ introBot = IntroBot(GROUPME_HOWDYBOT_ID, 'HowdyBot')
 @app.route('/LFjoin', methods=['POST'])
 def introFunc():
 	data = request.get_json()
-	printSomething("inside bot")
-	printSomething(data)
+	print(data)
 	if (data['name'] == introBot.name):
 		return "ok", 200
-	
+	if(data['name'] == 'GroupMe'):
+		if ("has joined the group" in data['text'])
+			introBot.Intro()
+
 	return "ok", 200
 
 testDadBot = DadBot(GROUPME_DADBOT_ID, 'DadBot')
