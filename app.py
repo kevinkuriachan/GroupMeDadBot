@@ -155,10 +155,10 @@ def rootPage():
 introBot = IntroBot(GROUPME_HOWDYBOT_ID, 'HowdtBot')
 @app.route('/LFjoin')
 def introFunc():
-	print('inside intro bot route')
 	data = request.get_json()
 	if (data['name'] == introBot.name):
 		return "ok", 200
+	print('inside intro bot route')
 	print(data)
 	return "ok", 200
 
