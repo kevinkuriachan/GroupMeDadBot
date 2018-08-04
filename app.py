@@ -15,7 +15,7 @@ app = Flask(__name__)
 GROUPME_DADBOT_ID = os.getenv('GROUPME_DADBOT_ID')
 GROUPME_COLBYBOT_ID = os.getenv('GROUPME_COLBYBOT_ID')
 GROUPME_FAM_DAD_ID = os.getenv('GROUPME_FAM_DAD_ID')
-
+GROUPME_HOWDYBOT_ID = os.getenv('GROUPME_HOWDYBOT_ID')
 
 #creating a reddit instance
 
@@ -61,11 +61,11 @@ class Bot:
 	def Deactivate(self):
 		self.isActive = False
 		self.saveStatus()
-		self.SendMessage("@"+self.name+" diabled")
+		self.SendMessage(self.name+" disabled")
 	def Active(self):
 		self.isActive = True
 		self.saveStatus()
-		self.SendMessage("@"+self.name+" enabled") 
+		self.SendMessage(self.name+" enabled") 
 
 	def Toggle(self):
 		if self.isActive:
@@ -139,12 +139,27 @@ class EchoBot(Bot):
 			self.SendMessage(msg)
 
 
+class IntroBot(Bot):
+	def __init__(self, BOT_ID, name):
+		super().__init__(BOT_ID, name)
+	def Intro():
+		msg = "Howdy! Welcome to the LechFadden community! Who is your SA parent and what floor are you on? Feel free to tell us about yourself."
+		self.SendMessage(msg)
 
 #create an instance and route for each bot
 
 @app.route('/')
 def rootPage():
 	return "GroupMe bots code located at 'github.com/kevinkuriachan/GroupMeDadBot'"
+
+introBot = IntroBot(GROUPME_HOWDYBOT_ID, 'HowdtBot');
+@app.route('/LFjoin'):
+def introFunc():
+	data = request.get_json()
+	if (data['name'] == introBot.name):
+		return "ok", 200
+	print(data)
+	return "ok", 200
 
 testDadBot = DadBot(GROUPME_DADBOT_ID, 'DadBot')
 @app.route('/dadbot', methods=['POST'])
@@ -155,6 +170,7 @@ def dadBotFunc():
 	msg = data['text']
 	if "@DadBot toggle" in msg:
 		testDadBot.Toggle()
+		return "ok", 200
 	if not testDadBot.isActive:
 		return "ok", 200	
 	testDadBot.SendDadMessage(data['text'])
@@ -166,6 +182,7 @@ def dadBotFunc():
 colbyMockBot = MockBot(GROUPME_COLBYBOT_ID, 'Colby Mock Bot', 'Colby Lorenz')
 @app.route('/colbymockbot', methods=['POST'])
 def colbyMockBotFunc():
+	colbyMockBot.isActive = False
 	data = request.get_json()
 	if data['name'] == colbyMockBot.name:
 		return "ok", 200
