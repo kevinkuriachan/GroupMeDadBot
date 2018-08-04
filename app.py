@@ -142,6 +142,9 @@ class EchoBot(Bot):
 class IntroBot(Bot):
 	def __init__(self, BOT_ID, name):
 		super().__init__(BOT_ID, name)
+
+	msgCount = 0
+
 	def Intro():
 		msg = "Howdy! Welcome to the LechFadden community! Who is your SA parent and what floor are you on? Please tell us about yourself."
 		self.SendMessage(msg)
@@ -158,9 +161,8 @@ def introFunc():
 	if (data['name'] == introBot.name):
 		return "ok", 200
 	if(data['name'] == 'GroupMe'):
-		if ("has joined the group" in data['text'])
+		if ("has joined the group" in data['text']):
 			introBot.Intro()
-
 	return "ok", 200
 
 testDadBot = DadBot(GROUPME_DADBOT_ID, 'DadBot')
