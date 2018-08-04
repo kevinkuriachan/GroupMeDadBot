@@ -161,7 +161,7 @@ def introFunc():
 		return "ok", 200
 	if(data['name'] == 'GroupMe'):
 		if ("has joined the group" in data['text']):
-			name = data['text'][0]
+			name = data['text'].split(' ', 1)[0]
 			introBot.Intro(name)
 	return "ok", 200
 
