@@ -162,7 +162,7 @@ def rootPage():
 	return "GroupMe bots code located at 'github.com/kevinkuriachan/GroupMeDadBot'"
 
 introBot = IntroBot(GROUPME_HOWDYBOT_ID, 'HowdyBot')
-@app.route('/LFjoin')
+@app.route('/LFjoin', methods=['POST'])
 def introFunc():
 	data = request.get_json()
 	printSomething("inside bot")
