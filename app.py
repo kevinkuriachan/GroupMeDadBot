@@ -164,8 +164,8 @@ introBot = IntroBot(GROUPME_HOWDYBOT_ID, 'HowdyBot')
 def introFunc():
 	data = request.get_json()
 	log.warn('inside intro bot route')
-	log.warn(data)
-	sys.stdout.flush()
+	dataStr = json.dumps(data)
+	log.warn(dataStr)
 	if (data['name'] == introBot.name):
 		return "ok", 200
 	
