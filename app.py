@@ -9,6 +9,7 @@ from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 app = Flask(__name__)
+app.config['DEBUG'] = True
 
 #set the bot id's of each bot from environment variables:
 
