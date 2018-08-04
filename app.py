@@ -154,6 +154,7 @@ log.addHandler(console)
 
 log.warn('testing out logger')
 
+dataStr = ""
 
 @app.route('/')
 def rootPage():
@@ -163,9 +164,8 @@ introBot = IntroBot(GROUPME_HOWDYBOT_ID, 'HowdyBot')
 @app.route('/LFjoin')
 def introFunc():
 	data = request.get_json()
-	log.warn('inside intro bot route')
-	dataStr = json.dumps(data)
-	log.warn(dataStr)
+	print("inside bot", file=sys.stderr)
+	print(data, file=sys.stderr)
 	if (data['name'] == introBot.name):
 		return "ok", 200
 	
