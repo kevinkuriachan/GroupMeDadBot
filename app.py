@@ -145,8 +145,8 @@ class IntroBot(Bot):
 
 	msgCount = 0
 
-	def Intro(self):
-		msg = "Howdy! Welcome to the LechFadden community! Who is your SA parent and what floor are you on? Please tell us about yourself. Ts&Gs!!!"
+	def Intro(self, name):
+		msg = "Howdy {}! Welcome to the LechFadden community! Who is your SA parent and what floor are you on? Please tell us about yourself. Ts&Gs!!!".format(name)
 		self.SendMessage(msg)
 
 @app.route('/')
@@ -162,7 +162,8 @@ def introFunc():
 		return "ok", 200
 	if(data['name'] == 'GroupMe'):
 		if ("has joined the group" in data['text']):
-			introBot.Intro()
+			name = data['text'].replace(" has joined the group", "")
+			introBot.Intro(name)
 	return "ok", 200
 
 testDadBot = DadBot(GROUPME_DADBOT_ID, 'DadBot')
