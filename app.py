@@ -157,12 +157,11 @@ introBot = IntroBot(GROUPME_HOWDYBOT_ID, 'HowdyBot')
 @app.route('/LFjoin', methods=['POST'])
 def introFunc():
 	data = request.get_json()
-	print(data)
 	if (data['name'] == introBot.name):
 		return "ok", 200
 	if(data['name'] == 'GroupMe'):
 		if ("has joined the group" in data['text']):
-			name = data['text'].replace(" has joined the group", "")
+			name = data['text'][0]
 			introBot.Intro(name)
 	return "ok", 200
 
