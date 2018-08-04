@@ -4,14 +4,12 @@ import json
 import random
 import praw
 import pickle
+import logging
 
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 app = Flask(__name__)
-app.config['DEBUG'] = True
-if __name__ == '__main__':
-    app.run()
 
 #set the bot id's of each bot from environment variables:
 
@@ -149,7 +147,13 @@ class IntroBot(Bot):
 		msg = "Howdy! Welcome to the LechFadden community! Who is your SA parent and what floor are you on? Feel free to tell us about yourself."
 		self.SendMessage(msg)
 
-#create an instance and route for each bot
+log = logging.getLogger()
+
+console = logging.StreamHandler()
+log.addHandler(console)
+
+log.warn('testing out logger')
+
 
 @app.route('/')
 def rootPage():
@@ -159,9 +163,8 @@ introBot = IntroBot(GROUPME_HOWDYBOT_ID, 'HowdyBot')
 @app.route('/LFjoin')
 def introFunc():
 	data = request.get_json()
-	print("inside intro bot route")
-	sys.stdout.flush()
-	print(data)
+	log.warn('inside intro bot route')
+	log.warn(data)
 	sys.stdout.flush()
 	if (data['name'] == introBot.name):
 		return "ok", 200
