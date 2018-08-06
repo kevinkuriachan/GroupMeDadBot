@@ -148,6 +148,9 @@ class IntroBot(Bot):
 	def Intro(self, name):
 		msg = "Howdy {}! Welcome to the LechFadden community! We need to know a couple things so we can get you situated. Who is your SA parent and what floor are you on? Please tell us about yourself. Ts&Gs!!!".format(name)
 		self.SendMessage(msg)
+	def PayRespect(self):
+		msg = "F"
+		self.SendMessage(msg)
 
 @app.route('/')
 def rootPage():
@@ -164,6 +167,13 @@ def introFunc():
 		if ("has joined the group" in data['text']):
 			name = data['text'].split(' ', 1)[0]
 			introBot.Intro(name)
+		if (("added" in data['text']) and ("to the group" in data['text'])):
+			str = data['text']
+			name = str[(str.find("added")+6):].split(' ', 1)[0]
+			introBot.Intro(name)
+		if (("removed" in data['text']) and ("from the group" in data['text'])):
+			introBot.PayRespect()
+
 	return "ok", 200
 
 testDadBot = DadBot(GROUPME_DADBOT_ID, 'DadBot')
