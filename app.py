@@ -159,6 +159,7 @@ def introFunc():
 	data = request.get_json()
 	if (data['name'] == introBot.name):
 		return "ok", 200
+	print(data)
 	if(data['name'] == 'GroupMe'):
 		if ("has joined the group" in data['text']):
 			name = data['text'].split(' ', 1)[0]
