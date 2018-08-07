@@ -180,6 +180,7 @@ testDadBot = DadBot(GROUPME_DADBOT_ID, 'DadBot')
 @app.route('/dadbot', methods=['POST'])
 def dadBotFunc():
 	data = request.get_json()
+	print(data)
 	if (data['name'] == testDadBot.name):
 		return "ok", 200
 	msg = data['text']
