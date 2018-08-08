@@ -210,7 +210,7 @@ def introFunc():
 			
 		if (("added" in data['text']) and ("to the group" in data['text'])):
 			stri = data['text']
-			name = stri[(stri.find("added")+6):].replace(" to the group", "")
+			name = stri[(stri.find("added")+6):].replace(" to the group.", "")
 			nameList = name.split(" ",1)
 			introBot.Intro(nameList[0])
 			user_id = getUserID(gm_info, name)
@@ -241,6 +241,10 @@ def dadBotFunc():
 
 	if ("test mention" in data['text']):
 		testDadBot.Mention("Kevin", data['sender_id'], "test mention")
+
+	name = data['text']
+	user_id = getUserID(getGMData(data['group_id']),name)
+	testDadBot.Mention(name, user_id)
 
 	return "ok", 200
 
