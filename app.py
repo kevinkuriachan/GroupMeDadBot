@@ -85,8 +85,8 @@ class Bot:
 			"attachments" : [
 				{ 
 					"type" :"mentions",
-					"loci" : [[0, len(text)]],
-					"user_ids" :[id]
+					"user_ids" :[id],
+					"loci" : [[0, len(text)]]	
 				}
 			]
 		}
