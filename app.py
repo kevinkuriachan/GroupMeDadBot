@@ -16,10 +16,27 @@ GROUPME_DADBOT_ID = os.getenv('GROUPME_DADBOT_ID')
 GROUPME_COLBYBOT_ID = os.getenv('GROUPME_COLBYBOT_ID')
 GROUPME_FAM_DAD_ID = os.getenv('GROUPME_FAM_DAD_ID')
 GROUPME_HOWDYBOT_ID = os.getenv('GROUPME_HOWDYBOT_ID')
+TOKEN = os.getenv('GM_TOKEN')
 
 #creating a reddit instance
 
 reddit = praw.Reddit(client_id = os.getenv('redditID'), client_secret = os.getenv('redditSecret'), user_agent = 'my user agent')
+
+
+def getGMData(gm_id):
+	url = 'https://api.groupme.com/v3/groups?token='+TOKEN
+	response = urllib.request.urlopen(url)
+	html = response.read()
+	info = html.decode('utf8')
+	data = json.loads(info)
+	for item in data['response']:
+		if item['group_id'] == gm_id:
+			return item
+
+def getUserID(item, username):
+	for person in item:
+		if (person['nickname'] == username):
+			return person['user_id']
 
 # Classes for bots:
 
@@ -58,6 +75,19 @@ class Bot:
 		request = Request(url, urlencode(data).encode())
 		json = urlopen(request).read().decode()
 
+	def Mention(self, name, id, message):
+		url = 'https://api.groupme.com/v3/bots/post'
+
+		data - {
+			'bot_id' : self.BOT_ID,
+			'attachments' : [{'loci': [[0, len(name)+1]], 'type':'mentions', 'user_ids':[str(id)]
+
+			}],
+			'text' : name+" "+message
+		}
+		request = Request(url, urlencode(data).encode())
+		json = urlopen(request).read().decode()
+		
 	def Deactivate(self):
 		self.isActive = False
 		self.saveStatus()
@@ -145,9 +175,17 @@ class IntroBot(Bot):
 
 	msgCount = 0
 
-	def Intro(self, name):
+	def Intro(self, name, user_id):
 		msg = "Howdy {}! Welcome to the LechFadden community! We need to know a couple things so we can get you situated. Who is your SA parent and what floor are you on? Please tell us about yourself. Ts&Gs!!!".format(name)
-		self.SendMessage(msg)
+		data - {
+			'bot_id' : self.BOT_ID,
+			'attachments' : [{'loci': [[6, len(name)+1]], 'type':'mentions', 'user_ids':[user_id]}],
+			'text' : msg
+		}
+		url = 'https://api.groupme.com/v3/bots/post'
+		request = Request(url, urlencode(data).encode())
+		json = urlopen(request).read().decode()
+
 	def PayRespect(self):
 		msg = "F"
 		self.SendMessage(msg)
@@ -163,14 +201,21 @@ def introFunc():
 	if (data['name'] == introBot.name):
 		return "ok", 200
 	print(data)
+	gm_id = data['group_id']
+	gm_info = getGMData(gm_id)
+
 	if(data['name'] == 'GroupMe'):
 		if ("has joined the group" in data['text']):
-			name = data['text'].split(' ', 1)[0]
-			introBot.Intro(name)
+			name = data['text'].replace(" has joined the group", "")
+			nameList = name.split(" ",1)
+			user_id = getUserID(gm_info, name)
+			introBot.Intro(nameList[0], user_id)
 		if (("added" in data['text']) and ("to the group" in data['text'])):
-			str = data['text']
-			name = str[(str.find("added")+6):].split(' ', 1)[0]
-			introBot.Intro(name)
+			stri = data['text']
+			name = stri[(stri.find("added")+6):].replace(" to the group", "")
+			nameList = name.split(" ",1)
+			user_id = getUserID(gm_info, name)
+			introBot.Intro(nameList[0], user_id)
 		if (("removed" in data['text']) and ("from the group" in data['text'])):
 			introBot.PayRespect()
 
@@ -192,6 +237,9 @@ def dadBotFunc():
 	testDadBot.SendDadMessage(data['text'])
 	if ("@DadBot" in data['text']) and ("toggle" not in data['text']):
 		testDadBot.SendDadJokeFromReddit()
+
+	if ("test mention" in data['text']):
+		testDadBot.Mention("Kevin", data['sender_id'], "test mention")
 
 	return "ok", 200
 
