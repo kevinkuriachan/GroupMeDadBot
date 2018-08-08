@@ -80,6 +80,17 @@ class Bot:
 		url = 'https://api.groupme.com/v3/bots/post'
 		text = "@"+name
 		data = {
+			"attachments" : [
+				{
+					"type": "image",
+					"url": "https://i.groupme.com/316x319.jpeg.f4a2f1a113bc461a8c127b814496db99"
+				},
+				{ 
+					"type" :"mentions",
+					"user_ids" :[id],
+					"loci" : [[0, len(text)]]	
+				}
+			],
 			'bot_id' : self.BOT_ID,
 			'text' : text,
 			"attachments" : [
