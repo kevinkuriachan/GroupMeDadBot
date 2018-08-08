@@ -76,15 +76,15 @@ class Bot:
 		request = Request(url, urlencode(data).encode())
 		json = urlopen(request).read().decode()
 
-	def Mention(self, name, id, message):
+	def Mention(self, name, id):
 		url = 'https://api.groupme.com/v3/bots/post'
 
 		data - {
 			'bot_id' : self.BOT_ID,
-			'attachments' : [{'loci': [[0, len(name)+1]], 'type':'mentions', 'user_ids':[str(id)]
+			'attachments' : [{'loci': [[0, len(name)+2]], 'type':'mentions', 'user_ids':[id]
 
 			}],
-			'text' : name+" "+message
+			'text' : "@"+name+ " "
 		}
 		request = Request(url, urlencode(data).encode())
 		json = urlopen(request).read().decode()
@@ -204,6 +204,7 @@ def introFunc():
 			nameList = name.split(" ",1)
 			introBot.Intro(nameList[0])
 			user_id = getUserID(gm_info, name)
+			introBot.Mention(name, user_id)
 			
 		if (("added" in data['text']) and ("to the group" in data['text'])):
 			stri = data['text']
@@ -211,6 +212,7 @@ def introFunc():
 			nameList = name.split(" ",1)
 			introBot.Intro(nameList[0])
 			user_id = getUserID(gm_info, name)
+			introBot.Mention(name, user_id)
 
 		if (("removed" in data['text']) and ("from the group" in data['text'])):
 			introBot.PayRespect()
