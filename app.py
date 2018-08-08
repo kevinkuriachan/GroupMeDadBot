@@ -178,7 +178,7 @@ class IntroBot(Bot):
 
 	def Intro(self, name, user_id):
 		msg = "Howdy {}! Welcome to the LechFadden community! We need to know a couple things so we can get you situated. Who is your SA parent and what floor are you on? Please tell us about yourself. Ts&Gs!!!".format(name)
-		data - {
+		data = {
 			'bot_id' : self.BOT_ID,
 			'attachments' : [{'loci': [[6, len(name)+1]], 'type':'mentions', 'user_ids':[user_id]}],
 			'text' : msg
