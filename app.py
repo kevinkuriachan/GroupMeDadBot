@@ -79,7 +79,7 @@ class Bot:
 	def Mention(self, name, id):
 		url = 'https://api.groupme.com/v3/bots/post'
 
-		data - {
+		data = {
 			'bot_id' : self.BOT_ID,
 			'attachments' : [{'loci': [[0, len(name)+2]], 'type':'mentions', 'user_ids':[id]
 
