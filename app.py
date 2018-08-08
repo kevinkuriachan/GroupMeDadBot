@@ -81,9 +81,7 @@ class Bot:
 
 		data = {
 			'bot_id' : self.BOT_ID,
-			'attachments' : [{'loci': [[0, len(name)+2]], 'type':'mentions', 'user_ids':[id]
-
-			}],
+			'attachments' : [{'loci': [[0, len(name)+2]], 'type':'mentions', 'user_ids':[id]}],
 			'text' : "@"+name+ " "
 		}
 		print(data)
