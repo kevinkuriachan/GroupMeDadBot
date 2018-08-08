@@ -176,16 +176,9 @@ class IntroBot(Bot):
 
 	msgCount = 0
 
-	def Intro(self, name, user_id):
+	def Intro(self, name):
 		msg = "Howdy {}! Welcome to the LechFadden community! We need to know a couple things so we can get you situated. Who is your SA parent and what floor are you on? Please tell us about yourself. Ts&Gs!!!".format(name)
-		data = {
-			'bot_id' : self.BOT_ID,
-			'attachments' : [{'loci': [[6, len(name)+1]], 'type':'mentions', 'user_ids':[user_id]}],
-			'text' : msg
-		}
-		url = 'https://api.groupme.com/v3/bots/post'
-		request = Request(url, urlencode(data).encode())
-		json = urlopen(request).read().decode()
+		self.SendMessage(msg)
 
 	def PayRespect(self):
 		msg = "F"
@@ -209,14 +202,16 @@ def introFunc():
 		if ("has joined the group" in data['text']):
 			name = data['text'].replace(" has joined the group", "")
 			nameList = name.split(" ",1)
+			introBot.Intro(nameList[0])
 			user_id = getUserID(gm_info, name)
-			introBot.Intro(nameList[0], user_id)
+			
 		if (("added" in data['text']) and ("to the group" in data['text'])):
 			stri = data['text']
 			name = stri[(stri.find("added")+6):].replace(" to the group", "")
 			nameList = name.split(" ",1)
+			introBot.Intro(nameList[0])
 			user_id = getUserID(gm_info, name)
-			introBot.Intro(nameList[0], user_id)
+
 		if (("removed" in data['text']) and ("from the group" in data['text'])):
 			introBot.PayRespect()
 
