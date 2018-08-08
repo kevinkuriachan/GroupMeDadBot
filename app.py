@@ -35,7 +35,7 @@ def getGMData(gm_id):
 			return item
 
 def getUserID(item, username):
-	for person in item:
+	for person in item['members']:
 		if (person['nickname'] == username):
 			return person['user_id']
 
