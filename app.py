@@ -4,6 +4,7 @@ import json
 import random
 import praw
 import pickle
+import urllib
 
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
