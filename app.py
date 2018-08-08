@@ -86,6 +86,7 @@ class Bot:
 			}],
 			'text' : "@"+name+ " "
 		}
+		print(data)
 		request = Request(url, urlencode(data).encode())
 		json = urlopen(request).read().decode()
 		
@@ -204,6 +205,7 @@ def introFunc():
 			nameList = name.split(" ",1)
 			introBot.Intro(nameList[0])
 			user_id = getUserID(gm_info, name)
+			print(user_id)
 			introBot.Mention(name, user_id)
 			
 		if (("added" in data['text']) and ("to the group" in data['text'])):
@@ -212,6 +214,7 @@ def introFunc():
 			nameList = name.split(" ",1)
 			introBot.Intro(nameList[0])
 			user_id = getUserID(gm_info, name)
+			print(user_id)
 			introBot.Mention(name, user_id)
 
 		if (("removed" in data['text']) and ("from the group" in data['text'])):
