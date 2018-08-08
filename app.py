@@ -81,8 +81,14 @@ class Bot:
 
 		data = {
 			'bot_id' : self.BOT_ID,
-			'attachments' : [{'loci': [[0, len(name)+2]], 'type':'mentions', 'user_ids':[id]}],
-			'text' : "@"+name+ " "
+			'text' : "@"+name+ " ",
+			"attachments" : [
+				{
+					"loci" : [[0, len(name)+2]], 
+					"type" :'mentions',
+					"user_ids" :[id]
+				}
+			]
 		}
 		print(data)
 		request = Request(url, urlencode(data).encode())
