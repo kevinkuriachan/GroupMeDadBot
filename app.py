@@ -199,7 +199,7 @@ def introFunc():
 	data = request.get_json()
 	if (data['name'] == introBot.name):
 		return "ok", 200
-	print(data)
+	#print(data)
 	gm_id = data['group_id']
 	gm_info = getGMData(gm_id)
 
