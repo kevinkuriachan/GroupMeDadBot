@@ -83,7 +83,7 @@ class Bot:
 	def Mention(self, name, id_):
 		url = 'https://api.groupme.com/v3/bots/post'
 		text = "@"+name
-		mention = attachments.Mentions(loci=[[0, len(text)]], user_id = id_)
+		mention = attachments.Mentions([[0, len(text)]], user_ids = [id_])
 		GMClient.bots.post(self.BOT_ID, text, [mention])
 		
 	def Deactivate(self):
