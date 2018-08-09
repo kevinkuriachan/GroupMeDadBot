@@ -5,6 +5,8 @@ import random
 import praw
 import pickle
 import urllib
+import groupy
+from groupy.client import Client, attachments
 
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
@@ -22,6 +24,8 @@ TOKEN = os.getenv('GM_TOKEN')
 #creating a reddit instance
 
 reddit = praw.Reddit(client_id = os.getenv('redditID'), client_secret = os.getenv('redditSecret'), user_agent = 'my user agent')
+
+GMClient = Client.from_token(TOKEN)
 
 
 def getGMData(gm_id):
@@ -79,24 +83,8 @@ class Bot:
 	def Mention(self, name, id_):
 		url = 'https://api.groupme.com/v3/bots/post'
 		text = "@"+name
-		data = {
-			'bot_id' : self.BOT_ID,
-			'text' : text,
-			"attachments" : [
-				{
-					"type": "image",
-					"url": "https://i.groupme.com/316x319.jpeg.f4a2f1a113bc461a8c127b814496db99"
-				},
-				{ 
-					"type" :"mentions",
-					"user_ids" :[id_],
-					"loci" : [[0, len(text)]]	
-				}
-			]
-		}
-		print(data)
-		request = Request(url, urlencode(data).encode())
-		json = urlopen(request).read().decode()
+		mention = attachments.Mentions(loci=[[0, len(text)]], user_id = id_)
+		GMClient.bots.post(self.BOT_ID, text, [mention])
 		
 	def Deactivate(self):
 		self.isActive = False
