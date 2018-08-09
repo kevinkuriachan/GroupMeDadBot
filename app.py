@@ -202,7 +202,7 @@ def introFunc():
 			introBot.Intro(nameList[0])
 			user_id = getUserID(gm_info, name)
 			print(user_id)
-			#introBot.Mention(name, user_id)
+			introBot.Mention(name, user_id)
 			
 		if (("added" in data['text']) and ("to the group" in data['text'])):
 			stri = data['text']
@@ -211,7 +211,7 @@ def introFunc():
 			introBot.Intro(nameList[0])
 			user_id = getUserID(gm_info, name)
 			print(user_id)
-			#introBot.Mention(name, user_id)
+			introBot.Mention(name, user_id)
 
 		if (("removed" in data['text']) and ("from the group" in data['text'])):
 			introBot.PayRespect()
@@ -238,9 +238,6 @@ def dadBotFunc():
 	if ("test mention" in data['text']):
 		testDadBot.Mention("Kevin", data['sender_id'], "test mention")
 
-	name = data['text']
-	user_id = getUserID(getGMData(data['group_id']),name)
-	testDadBot.Mention(name, user_id)
 
 	return "ok", 200
 
