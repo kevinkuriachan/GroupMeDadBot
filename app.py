@@ -264,7 +264,7 @@ def nerdValley():
 	data = request.get_json()
 	if (data['name'] == famDadBot.name):
 		return "ok", 200	
-	famDadBot.SendDadMessage(data['text'])
+	#famDadBot.SendDadMessage(data['text'])
 	if "@DadBot" in data['text']:
 		famDadBot.SendDadJokeFromReddit()
 
