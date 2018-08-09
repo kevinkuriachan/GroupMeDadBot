@@ -258,7 +258,7 @@ def colbyMockBotFunc():
 	return "ok", 200
 
 
-famDadBot = DadBot(GROUPME_FAM_DAD_ID, DadBot)
+famDadBot = DadBot(GROUPME_FAM_DAD_ID, 'DadBot')
 @app.route('/nerdvalley', methods=['POST'])
 def nerdValley():
 	data = request.get_json()
