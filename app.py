@@ -174,7 +174,7 @@ class IntroBot(Bot):
 	msgCount = 0
 
 	def Intro(self, name):
-		msg = "Howdy {}! Welcome to the LechFadden community! We need to know a couple things so we can get you situated. Who is your SA parent and what floor are you on? Please tell us about yourself. Ts&Gs!!!".format(name)
+		msg = "Howdy {}! Welcome to the LechFadden community! We need to know a couple things so we can get you situated. Who is your SA parent and what dorm/floor are you on? Beep Boop. Ts&Gs!!!".format(name)
 		self.SendMessage(msg)
 
 	def PayRespect(self):
